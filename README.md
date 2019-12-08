@@ -1,2 +1,3 @@
 # FunPythonMask
-Project of skoltech
+
+The decsription will be soon....
