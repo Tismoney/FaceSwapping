@@ -2,6 +2,7 @@ from imutils import face_utils
 import dlib
 import numpy as np
 import cv2
+from matplotlib import pyplot as plt
 
 from .base import BaseFaceSwapping
 from .utils import *
@@ -20,9 +21,9 @@ class RefFaceSwapping(BaseFaceSwapping):
 
         old_head = cv2.bitwise_and(dst_img, dst_img, mask=face_mask)
         new_face = np.zeros_like(dst_img)
-
+        i = 0
         for idxs in tr:
-            
+            i += 1
             idxs = list(idxs)
             
             # Source Face
@@ -56,12 +57,16 @@ class RefFaceSwapping(BaseFaceSwapping):
             new_face_rect = cv2.add(new_face_rect, warped_tr)
             new_face[y: y + h, x: x + w] = new_face_rect
             
+#             plt.figure(figsize=(16,9))
+#             plt.imshow(new_face)
+#             plt.axis(False)
+#             plt.savefig(f'imgs/step5/face_{i}.png')
         
         result = cv2.add(old_head, new_face)
 
         (x, y, w, h) = cv2.boundingRect(convexhull)
         center = (x + w // 2, y + h // 2)
-        result = cv2.seamlessClone(result, dst_img, head_mask, center, cv2.MIXED_CLONE)
+        result = cv2.seamlessClone(result, dst_img, head_mask, center, cv2.NORMAL_CLONE)
         
         return result
     
