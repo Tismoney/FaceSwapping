@@ -25,6 +25,10 @@
 ![step_5_end](./imgs/step_7.png)
 
 
+## Examples
+
+![ex1](./imgs/result_two.png)
+
 ## Techology part
 The most of the algorithms are written using [openCV](https://pypi.org/project/opencv-python/)
 
@@ -32,4 +36,4 @@ The most of the algorithms are written using [openCV](https://pypi.org/project/o
 * Keypoint detection: **The cascade of regressors** using [dlib](http://dlib.net) based on this [paper](http://www.nada.kth.se/~sullivan/Papers/Kazemi_cvpr14.pdf)
 * Face triangulation: simple **Triangulation**
 * Reconstruction: **Affine projection** each triangles 
-* Color alignment: **Seamless Cloning**
+* Color alignment: **Seamless Cloning** ([details](http://amroamroamro.github.io/mexopencv/opencv/cloning_demo.html))
