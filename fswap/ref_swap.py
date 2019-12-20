@@ -10,7 +10,7 @@ from .utils import *
 class RefFaceSwapping(BaseFaceSwapping):
     
     @staticmethod
-    def swap_faces(src_img, src_pt, dst_img, dst_pt, tr):
+    def swap_faces(src_img, src_pt, dst_img, dst_pt, tr, clone_mode):
         
         h, w, _ = dst_img.shape
         convexhull = cv2.convexHull(dst_pt)
@@ -66,7 +66,7 @@ class RefFaceSwapping(BaseFaceSwapping):
 
         (x, y, w, h) = cv2.boundingRect(convexhull)
         center = (x + w // 2, y + h // 2)
-        result = cv2.seamlessClone(result, dst_img, head_mask, center, cv2.NORMAL_CLONE)
+        result = cv2.seamlessClone(result, dst_img, head_mask, center, clone_mode)
         
         return result
     
@@ -76,10 +76,6 @@ class RefFaceSwapping(BaseFaceSwapping):
         new_img = img.copy()
 
         for points in keypoints:
-            try:
-                new_img = self.swap_faces(self.ref_img, self.ref_keypoints,
-                                          new_img, points,
-                                          self.ref_traingles_indxs)
-            except:
-                new_img = new_img
+            new_img = self.swap_faces(self.ref_img, self.ref_keypoints, new_img,
+                                      points, self.ref_traingles_indxs, self.clone_mode)
         return new_img

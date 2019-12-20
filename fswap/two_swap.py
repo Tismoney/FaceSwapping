@@ -11,7 +11,7 @@ from matplotlib import pyplot as plt
 class TwoFaceSwapping(BaseFaceSwapping):
     
     @staticmethod
-    def swap_faces(img, src_pt, dst_pt, tr):
+    def swap_faces(img, src_pt, dst_pt, tr, clone_mode):
         
         h, w, _ = img.shape
 
@@ -87,14 +87,14 @@ class TwoFaceSwapping(BaseFaceSwapping):
         src_result = cv2.add(src_result, src_new_face)
         (x, y, w, h) = cv2.boundingRect(src_convexhull)
         center = (x + w // 2, y + h // 2)
-        src_result = cv2.seamlessClone(src_result, img, src_head_mask, center, cv2.NORMAL_CLONE)
+        src_result = cv2.seamlessClone(src_result, img, src_head_mask, center, clone_mode)
 
 
         dst_result = cv2.bitwise_and(img, img, mask=dst_face_mask)
         dst_result = cv2.add(dst_result, dst_new_face)
         (x, y, w, h) = cv2.boundingRect(dst_convexhull)
         center = (x + w // 2, y + h // 2)
-        dst_result = cv2.seamlessClone(dst_result, img, dst_head_mask, center, cv2.NORMAL_CLONE)
+        dst_result = cv2.seamlessClone(dst_result, img, dst_head_mask, center, clone_mode)
 
         src_face = cv2.bitwise_and(src_result, src_result, mask=src_head_mask)
         src_head = cv2.bitwise_and(dst_result, dst_result, mask=src_face_mask)
@@ -110,5 +110,5 @@ class TwoFaceSwapping(BaseFaceSwapping):
         new_img = img.copy()
         if len(keypoints) >= 2:
             new_img = self.swap_faces(new_img, keypoints[0] , keypoints[1],
-                                      self.ref_traingles_indxs)
+                                      self.ref_traingles_indxs, self.clone_mode)
         return new_img
