@@ -2,6 +2,7 @@
 
 
 ## Step-by-step solution
+Based on this [solution](https://pysource.com/2019/05/28/face-swapping-explained-in-8-steps-opencv-with-python/).
 ### 1. Face detection
 ![step_1](./imgs/step_1.png)
 
@@ -26,7 +27,6 @@
 
 
 ## Examples
-
 ![ex1](./imgs/result_two.png)
 
 ## Techology part
